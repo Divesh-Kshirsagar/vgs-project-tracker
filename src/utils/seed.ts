@@ -20,7 +20,7 @@ export const generateTasks = (): Task[] => {
   const tasks: Task[] = []
   
   for (let i = 0; i < 500; i++) {
-    const id = crypto.randomUUID() as string; // Generate a random ID
+    const id = crypto.randomUUID() as string; 
     const title = TITLES[Math.floor(Math.random() * TITLES.length)];
     const status = STATUSES[Math.floor(Math.random() * STATUSES.length)]; 
     const priority = PRIORITIES[Math.floor(Math.random() * PRIORITIES.length)];

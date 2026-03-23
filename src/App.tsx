@@ -3,6 +3,7 @@ import { useUrlFilters } from './hooks/useUrlFilters';
 import { useTaskStore } from './store/taskStore';
 import { FilterBar } from './components/layout/FilterBar';
 import { ListView } from './features/list/ListView';
+import { KanbanBoard } from './features/kanban/KanbanBoard';
 
 type ViewMode = 'kanban' | 'list' | 'timeline';
 
@@ -71,7 +72,8 @@ function App() {
 
       <main className="flex-1 overflow-hidden relative p-6">
         {view === 'list' && <ListView tasks={filteredTasks} />}
-        {view === 'kanban' && <div>Kanban coming next...</div>}
+        {view === 'kanban' && <KanbanBoard tasks={filteredTasks} />}
+        {/* {view === 'timeline' && <TimelineView tasks={filteredTasks} />} */}
       </main>
     </div>
   );

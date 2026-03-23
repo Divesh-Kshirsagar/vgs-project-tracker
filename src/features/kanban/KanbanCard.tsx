@@ -1,0 +1,55 @@
+import React from 'react';
+import type { Task } from '../../types';
+import { Badge } from '../../components/ui/Badge';
+import { Avatar } from '../../components/ui/Avatar';
+import { DueDateLabel } from '../../components/ui/DueDateLabel';
+
+interface KanbanCardProps {
+  task: Task;
+  isDragging: boolean;
+  isFloatingClone?: boolean;
+  onPointerDown?: (e: React.PointerEvent, id: string) => void;
+  startPos?: { x: number; y: number };
+  currentPos?: { x: number; y: number };
+  isSnappingBack?: boolean;
+}
+
+export const KanbanCard: React.FC<KanbanCardProps> = ({ 
+  task, isDragging, isFloatingClone, onPointerDown, startPos, currentPos, isSnappingBack 
+}) => {
+  if (isDragging && !isFloatingClone) {
+    return (
+      <div className="h-32 border-2 border-dashed border-gray-300 bg-gray-50 rounded-lg my-2 opacity-50" />
+    );
+  }
+
+  const deltaX = isFloatingClone && currentPos && startPos ? currentPos.x - startPos.x : 0;
+  const deltaY = isFloatingClone && currentPos && startPos ? currentPos.y - startPos.y : 0;
+
+  return (
+    <div
+      id={isFloatingClone ? `drag-${task.id}` : undefined}
+      onPointerDown={(e) => onPointerDown && onPointerDown(e, task.id)}
+      className={`
+        bg-white p-4 rounded-lg border shadow-sm my-2 cursor-grab touch-none select-none
+        hover:border-blue-300 transition-colors
+        ${isFloatingClone ? 'fixed z-50 opacity-90 shadow-xl pointer-events-none w-72' : 'relative'}
+        ${isSnappingBack ? 'transition-transform duration-300 ease-out' : ''}
+      `}
+      style={isFloatingClone ? {
+        transform: `translate(calc(${deltaX}px), calc(${deltaY}px))`,
+        top: startPos?.y ? `${startPos.y - 40}px` : 0, 
+        left: startPos?.x ? `${startPos.x - 144}px` : 0, 
+      } : undefined}
+    >
+      <div className="flex justify-between items-start mb-2">
+        <Badge label={task.priority} />
+        <Avatar initials={task.assignee} />
+      </div>
+      <h3 className="font-semibold text-gray-800 text-sm mb-3 line-clamp-2">{task.title}</h3>
+      <div className="flex justify-between items-center text-xs text-gray-500">
+        <DueDateLabel dateString={task.dueDate} />
+      </div>
+    </div>
+  );
+};
