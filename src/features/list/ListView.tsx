@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { useTaskStore } from '../../store/taskStore';
 import { useVirtualizer } from '../../hooks/useVirtualizer';
-import type { TaskStatus } from '../../types';
+import type { Task, TaskStatus } from '../../types';
 import type { SortKey, SortDirection } from '../../utils/sort';
 import { PRIORITY_WEIGHT } from '../../utils/sort';
 import { Badge } from '../../components/ui/Badge';
@@ -23,8 +23,12 @@ const SortIndicator: React.FC<SortIndicatorProps> = ({ column, sortKey, sortDir 
   return <span className="ml-1 text-blue-600">{sortDir === 'asc' ? '↑' : '↓'}</span>;
 };
 
-export const ListView: React.FC = () => {
-  const { tasks, updateTaskStatus } = useTaskStore();
+type ListViewProps = {
+  tasks: Task[];
+};
+
+export const ListView: React.FC<ListViewProps> = ({ tasks }) => {
+  const updateTaskStatus = useTaskStore((s) => s.updateTaskStatus);
   const [sortKey, setSortKey] = useState<SortKey>('dueDate');
   const [sortDir, setSortDir] = useState<SortDirection>('asc');
 
