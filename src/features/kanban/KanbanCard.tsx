@@ -14,8 +14,14 @@ interface KanbanCardProps {
   isSnappingBack?: boolean;
 }
 
-export const KanbanCard: React.FC<KanbanCardProps> = ({ 
-  task, isDragging, isFloatingClone, onPointerDown, startPos, currentPos, isSnappingBack 
+export const KanbanCard: React.FC<KanbanCardProps> = ({
+  task,
+  isDragging,
+  isFloatingClone,
+  onPointerDown,
+  startPos,
+  currentPos,
+  isSnappingBack,
 }) => {
   if (isDragging && !isFloatingClone) {
     return (
@@ -23,8 +29,10 @@ export const KanbanCard: React.FC<KanbanCardProps> = ({
     );
   }
 
-  const deltaX = isFloatingClone && currentPos && startPos ? currentPos.x - startPos.x : 0;
-  const deltaY = isFloatingClone && currentPos && startPos ? currentPos.y - startPos.y : 0;
+  const deltaX =
+    isFloatingClone && currentPos && startPos ? currentPos.x - startPos.x : 0;
+  const deltaY =
+    isFloatingClone && currentPos && startPos ? currentPos.y - startPos.y : 0;
 
   return (
     <div
@@ -36,17 +44,23 @@ export const KanbanCard: React.FC<KanbanCardProps> = ({
         ${isFloatingClone ? 'fixed z-50 opacity-90 shadow-xl pointer-events-none w-72' : 'relative'}
         ${isSnappingBack ? 'transition-transform duration-300 ease-out' : ''}
       `}
-      style={isFloatingClone ? {
-        transform: `translate(calc(${deltaX}px), calc(${deltaY}px))`,
-        top: startPos?.y ? `${startPos.y - 40}px` : 0, 
-        left: startPos?.x ? `${startPos.x - 144}px` : 0, 
-      } : undefined}
+      style={
+        isFloatingClone
+          ? {
+              transform: `translate(calc(${deltaX}px), calc(${deltaY}px))`,
+              top: startPos?.y ? `${startPos.y - 40}px` : 0,
+              left: startPos?.x ? `${startPos.x - 144}px` : 0,
+            }
+          : undefined
+      }
     >
       <div className="flex justify-between items-start mb-2">
         <Badge label={task.priority} />
         <Avatar initials={task.assignee} />
       </div>
-      <h3 className="font-semibold text-gray-800 text-sm mb-3 line-clamp-2">{task.title}</h3>
+      <h3 className="font-semibold text-gray-800 text-sm mb-3 line-clamp-2">
+        {task.title}
+      </h3>
       <div className="flex justify-between items-center text-xs text-gray-500">
         <DueDateLabel dateString={task.dueDate} />
       </div>

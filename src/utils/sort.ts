@@ -1,4 +1,4 @@
-import type { Task, TaskPriority } from '../types';
+import type { TaskPriority } from '../types';
 
 export const PRIORITY_WEIGHT: Record<TaskPriority, number> = {
   Critical: 4,

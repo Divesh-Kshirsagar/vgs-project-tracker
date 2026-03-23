@@ -4,14 +4,14 @@ interface AvatarProps {
   initials: string;
   isStacked?: boolean;
   isOverflow?: boolean;
-  bgColorClass?: string; 
+  bgColorClass?: string;
 }
 
-export const Avatar: React.FC<AvatarProps> = ({ 
-  initials, 
-  isStacked = false, 
+export const Avatar: React.FC<AvatarProps> = ({
+  initials,
+  isStacked = false,
   isOverflow = false,
-  bgColorClass = 'bg-blue-600'
+  bgColorClass = 'bg-blue-600',
 }) => {
   return (
     <div

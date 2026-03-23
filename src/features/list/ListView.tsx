@@ -18,9 +18,15 @@ type SortIndicatorProps = {
   sortDir: SortDirection;
 };
 
-const SortIndicator: React.FC<SortIndicatorProps> = ({ column, sortKey, sortDir }) => {
+const SortIndicator: React.FC<SortIndicatorProps> = ({
+  column,
+  sortKey,
+  sortDir,
+}) => {
   if (sortKey !== column) return null;
-  return <span className="ml-1 text-blue-600">{sortDir === 'asc' ? '↑' : '↓'}</span>;
+  return (
+    <span className="ml-1 text-blue-600">{sortDir === 'asc' ? '↑' : '↓'}</span>
+  );
 };
 
 type ListViewProps = {
@@ -70,21 +76,39 @@ export const ListView: React.FC<ListViewProps> = ({ tasks }) => {
     return <div className="p-8 text-center text-gray-500">No tasks found.</div>;
   }
 
-  const gridTemplate = "grid-cols-[2fr_1fr_1fr_1fr_1.5fr]";
+  const gridTemplate = 'grid-cols-[2fr_1fr_1fr_1fr_1.5fr]';
 
   return (
     <div className="bg-white rounded-lg border shadow-sm flex flex-col h-full">
       {/* Header Row */}
-      <div className={`grid ${gridTemplate} gap-4 p-4 border-b bg-gray-50 font-semibold text-sm text-gray-700 select-none`}>
-        <div className="cursor-pointer hover:text-black flex items-center" onClick={() => handleSort('title')}>
-          Task Title <SortIndicator column="title" sortKey={sortKey} sortDir={sortDir} />
+      <div
+        className={`grid ${gridTemplate} gap-4 p-4 border-b bg-gray-50 font-semibold text-sm text-gray-700 select-none`}
+      >
+        <div
+          className="cursor-pointer hover:text-black flex items-center"
+          onClick={() => handleSort('title')}
+        >
+          Task Title{' '}
+          <SortIndicator column="title" sortKey={sortKey} sortDir={sortDir} />
         </div>
         <div>Assignee</div>
-        <div className="cursor-pointer hover:text-black flex items-center" onClick={() => handleSort('priority')}>
-          Priority <SortIndicator column="priority" sortKey={sortKey} sortDir={sortDir} />
+        <div
+          className="cursor-pointer hover:text-black flex items-center"
+          onClick={() => handleSort('priority')}
+        >
+          Priority{' '}
+          <SortIndicator
+            column="priority"
+            sortKey={sortKey}
+            sortDir={sortDir}
+          />
         </div>
-        <div className="cursor-pointer hover:text-black flex items-center" onClick={() => handleSort('dueDate')}>
-          Due Date <SortIndicator column="dueDate" sortKey={sortKey} sortDir={sortDir} />
+        <div
+          className="cursor-pointer hover:text-black flex items-center"
+          onClick={() => handleSort('dueDate')}
+        >
+          Due Date{' '}
+          <SortIndicator column="dueDate" sortKey={sortKey} sortDir={sortDir} />
         </div>
         <div>Status (Inline Edit)</div>
       </div>
@@ -104,18 +128,28 @@ export const ListView: React.FC<ListViewProps> = ({ tasks }) => {
                 className={`absolute w-full grid ${gridTemplate} gap-4 px-4 items-center border-b hover:bg-gray-50 transition-colors`}
                 style={{
                   height: `${ROW_HEIGHT}px`,
-                  top: `${offsetTop}px`
+                  top: `${offsetTop}px`,
                 }}
               >
-                <div className="font-medium text-sm truncate pr-4">{task.title}</div>
-                <div><Avatar initials={task.assignee} /></div>
-                <div><Badge label={task.priority} /></div>
-                <div><DueDateLabel dateString={task.dueDate} /></div>
+                <div className="font-medium text-sm truncate pr-4">
+                  {task.title}
+                </div>
+                <div>
+                  <Avatar initials={task.assignee} />
+                </div>
+                <div>
+                  <Badge label={task.priority} />
+                </div>
+                <div>
+                  <DueDateLabel dateString={task.dueDate} />
+                </div>
                 <div>
                   <Dropdown
                     value={task.status}
                     options={['To Do', 'In Progress', 'In Review', 'Done']}
-                    onChange={(e) => updateTaskStatus(task.id, e.target.value as TaskStatus)}
+                    onChange={(e) =>
+                      updateTaskStatus(task.id, e.target.value as TaskStatus)
+                    }
                   />
                 </div>
               </div>

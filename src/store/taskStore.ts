@@ -13,15 +13,13 @@ interface TaskState {
 
 export const useTaskStore = create<TaskState>()(
   persist(
-    (set, get) => ({
+    (set) => ({
       tasks: [],
       setTasks: (tasks) => set({ tasks }),
       updateTaskStatus: (id, newStatus) =>
         set((state) => ({
           tasks: state.tasks.map((task) =>
-            task.id === id
-              ? { ...task, status: newStatus }
-              : task
+            task.id === id ? { ...task, status: newStatus } : task,
           ),
         })),
     }),
@@ -38,6 +36,6 @@ export const useTaskStore = create<TaskState>()(
           state.setTasks(generated);
         }
       },
-    }
-  )
+    },
+  ),
 );

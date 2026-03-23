@@ -8,12 +8,17 @@ const COLUMNS: TaskStatus[] = ['To Do', 'In Progress', 'In Review', 'Done'];
 
 export const KanbanBoard: React.FC<{ tasks: Task[] }> = ({ tasks }) => {
   const { updateTaskStatus } = useTaskStore();
-  
-  const { 
-    draggedId, startPos, currentPos, hoveredColumn, isSnappingBack, handlePointerDown 
+
+  const {
+    draggedId,
+    startPos,
+    currentPos,
+    hoveredColumn,
+    isSnappingBack,
+    handlePointerDown,
   } = usePointerDnD(updateTaskStatus);
 
-  const draggedTask = tasks.find(t => t.id === draggedId);
+  const draggedTask = tasks.find((t) => t.id === draggedId);
 
   return (
     <div className="flex h-full gap-6 overflow-x-auto pb-4">
@@ -22,9 +27,9 @@ export const KanbanBoard: React.FC<{ tasks: Task[] }> = ({ tasks }) => {
         const isHovered = hoveredColumn === status;
 
         return (
-          <div 
+          <div
             key={status}
-            data-status={status} 
+            data-status={status}
             className={`
               flex flex-col min-w-[320px] max-w-[320px] bg-gray-100/50 rounded-xl p-4 border transition-colors
               ${isHovered ? 'bg-blue-50 border-blue-200' : 'border-transparent'}
@@ -45,11 +50,11 @@ export const KanbanBoard: React.FC<{ tasks: Task[] }> = ({ tasks }) => {
               )}
 
               {columnTasks.map((task) => (
-                <KanbanCard 
-                  key={task.id} 
-                  task={task} 
+                <KanbanCard
+                  key={task.id}
+                  task={task}
                   isDragging={draggedId === task.id}
-                  onPointerDown={handlePointerDown} 
+                  onPointerDown={handlePointerDown}
                 />
               ))}
             </div>
@@ -58,9 +63,9 @@ export const KanbanBoard: React.FC<{ tasks: Task[] }> = ({ tasks }) => {
       })}
 
       {draggedTask && (
-        <KanbanCard 
-          task={draggedTask} 
-          isDragging={true} 
+        <KanbanCard
+          task={draggedTask}
+          isDragging={true}
           isFloatingClone={true}
           startPos={startPos}
           currentPos={currentPos}

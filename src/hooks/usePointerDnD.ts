@@ -1,9 +1,14 @@
 import { useState, useCallback, useEffect } from 'react';
 import type { TaskStatus } from '../types';
 
-interface Position { x: number; y: number }
+interface Position {
+  x: number;
+  y: number;
+}
 
-export const usePointerDnD = (onDrop: (taskId: string, newStatus: TaskStatus) => void) => {
+export const usePointerDnD = (
+  onDrop: (taskId: string, newStatus: TaskStatus) => void,
+) => {
   const [draggedId, setDraggedId] = useState<string | null>(null);
   const [startPos, setStartPos] = useState<Position>({ x: 0, y: 0 });
   const [currentPos, setCurrentPos] = useState<Position>({ x: 0, y: 0 });
@@ -12,9 +17,9 @@ export const usePointerDnD = (onDrop: (taskId: string, newStatus: TaskStatus) =>
 
   const handlePointerDown = (e: React.PointerEvent, taskId: string) => {
     if (e.button !== 0 && e.pointerType === 'mouse') return;
-    
+
     e.preventDefault();
-    e.target.setPointerCapture(e.pointerId); 
+    // e.target.setPointerCapture(e.pointerId);
 
     setDraggedId(taskId);
     setStartPos({ x: e.clientX, y: e.clientY });
@@ -22,26 +27,28 @@ export const usePointerDnD = (onDrop: (taskId: string, newStatus: TaskStatus) =>
     setIsSnappingBack(false);
   };
 
-  const handlePointerMove = useCallback((e: PointerEvent) => {
-    if (!draggedId) return;
+  const handlePointerMove = useCallback(
+    (e: PointerEvent) => {
+      if (!draggedId) return;
 
-    setCurrentPos({ x: e.clientX, y: e.clientY });
+      setCurrentPos({ x: e.clientX, y: e.clientY });
 
+      const draggedEl = document.getElementById(`drag-${draggedId}`);
+      if (draggedEl) draggedEl.style.pointerEvents = 'none';
 
-    const draggedEl = document.getElementById(`drag-${draggedId}`);
-    if (draggedEl) draggedEl.style.pointerEvents = 'none';
+      const elementBelow = document.elementFromPoint(e.clientX, e.clientY);
+      const columnEl = elementBelow?.closest('[data-status]');
 
-    const elementBelow = document.elementFromPoint(e.clientX, e.clientY);
-    const columnEl = elementBelow?.closest('[data-status]');
-    
-    if (columnEl) {
-      setHoveredColumn(columnEl.getAttribute('data-status') as TaskStatus);
-    } else {
-      setHoveredColumn(null);
-    }
+      if (columnEl) {
+        setHoveredColumn(columnEl.getAttribute('data-status') as TaskStatus);
+      } else {
+        setHoveredColumn(null);
+      }
 
-    if (draggedEl) draggedEl.style.pointerEvents = 'auto';
-  }, [draggedId]);
+      if (draggedEl) draggedEl.style.pointerEvents = 'auto';
+    },
+    [draggedId],
+  );
 
   const handlePointerUp = useCallback(() => {
     if (!draggedId) return;
@@ -52,11 +59,11 @@ export const usePointerDnD = (onDrop: (taskId: string, newStatus: TaskStatus) =>
       setHoveredColumn(null);
     } else {
       setIsSnappingBack(true);
-      setCurrentPos(startPos); 
+      setCurrentPos(startPos);
       setTimeout(() => {
         setDraggedId(null);
         setIsSnappingBack(false);
-      }, 300); 
+      }, 300);
     }
   }, [draggedId, hoveredColumn, startPos, onDrop]);
 

@@ -8,23 +8,29 @@ import { KanbanBoard } from './features/kanban/KanbanBoard';
 type ViewMode = 'kanban' | 'list' | 'timeline';
 
 function App() {
-  const [view, setView] = useState<ViewMode>('list'); 
+  const [view, setView] = useState<ViewMode>('list');
   const tasks = useTaskStore((state) => state.tasks);
   const { filters, updateFilters, clearFilters } = useUrlFilters();
 
   const filteredTasks = useMemo(() => {
     return tasks.filter((task) => {
       // 1. Array Filters (If array is empty, it means "show all")
-      const matchStatus = filters.status.length === 0 || filters.status.includes(task.status);
-      const matchPriority = filters.priority.length === 0 || filters.priority.includes(task.priority);
-      const matchAssignee = filters.assignee.length === 0 || filters.assignee.includes(task.assignee);
-      
+      const matchStatus =
+        filters.status.length === 0 || filters.status.includes(task.status);
+      const matchPriority =
+        filters.priority.length === 0 ||
+        filters.priority.includes(task.priority);
+      const matchAssignee =
+        filters.assignee.length === 0 ||
+        filters.assignee.includes(task.assignee);
+
       // 2. Date Range Filters
       let matchDate = true;
       const taskDate = new Date(task.dueDate).getTime();
-      
+
       if (filters.dateFrom) {
-        matchDate = matchDate && taskDate >= new Date(filters.dateFrom).getTime();
+        matchDate =
+          matchDate && taskDate >= new Date(filters.dateFrom).getTime();
       }
       if (filters.dateTo) {
         // Add 24 hours to dateTo so the whole day is inclusive
@@ -54,7 +60,9 @@ function App() {
                 key={mode}
                 onClick={() => setView(mode)}
                 className={`px-4 py-1.5 rounded-md text-sm font-medium capitalize transition-colors ${
-                  view === mode ? 'bg-white shadow text-gray-900' : 'text-gray-500 hover:text-gray-900'
+                  view === mode
+                    ? 'bg-white shadow text-gray-900'
+                    : 'text-gray-500 hover:text-gray-900'
                 }`}
               >
                 {mode}
@@ -62,11 +70,11 @@ function App() {
             ))}
           </div>
         </div>
-        
-        <FilterBar 
-          filters={filters} 
-          updateFilters={updateFilters} 
-          clearFilters={clearFilters} 
+
+        <FilterBar
+          filters={filters}
+          updateFilters={updateFilters}
+          clearFilters={clearFilters}
         />
       </div>
 

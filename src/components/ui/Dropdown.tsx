@@ -6,7 +6,13 @@ interface DropdownProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
   onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
 }
 
-export const Dropdown: React.FC<DropdownProps> = ({ options, value, onChange, className = '', ...rest }) => {
+export const Dropdown: React.FC<DropdownProps> = ({
+  options,
+  value,
+  onChange,
+  className = '',
+  ...rest
+}) => {
   return (
     <select
       value={value}

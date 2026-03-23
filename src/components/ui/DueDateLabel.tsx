@@ -7,7 +7,7 @@ interface DueDateLabelProps {
 export const DueDateLabel: React.FC<DueDateLabelProps> = ({ dateString }) => {
   const dueDate = new Date(dateString);
   const today = new Date();
-  
+
   // Strip time for accurate day calculation
   dueDate.setHours(0, 0, 0, 0);
   today.setHours(0, 0, 0, 0);
