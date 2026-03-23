@@ -25,7 +25,9 @@ const SortIndicator: React.FC<SortIndicatorProps> = ({
 }) => {
   if (sortKey !== column) return null;
   return (
-    <span className="ml-1 text-blue-600">{sortDir === 'asc' ? '↑' : '↓'}</span>
+    <span className="ml-1 text-blue-600">
+      {sortDir === 'asc' ? '↑' : '↓'}
+    </span>
   );
 };
 
@@ -35,27 +37,32 @@ type ListViewProps = {
 
 export const ListView: React.FC<ListViewProps> = ({ tasks }) => {
   const updateTaskStatus = useTaskStore((s) => s.updateTaskStatus);
+  const activeCollaborators = useTaskStore(
+    (state) => state.activeCollaborators
+  );
+
   const [sortKey, setSortKey] = useState<SortKey>('dueDate');
   const [sortDir, setSortDir] = useState<SortDirection>('asc');
 
-  // 1. Sort the Data
   const sortedTasks = useMemo(() => {
     return [...tasks].sort((a, b) => {
       let comparison = 0;
+
       if (sortKey === 'title') {
         comparison = a.title.localeCompare(b.title);
       } else if (sortKey === 'priority') {
-        comparison = PRIORITY_WEIGHT[b.priority] - PRIORITY_WEIGHT[a.priority];
+        comparison =
+          PRIORITY_WEIGHT[b.priority] - PRIORITY_WEIGHT[a.priority];
       } else if (sortKey === 'dueDate') {
         const dateA = new Date(a.dueDate).getTime();
         const dateB = new Date(b.dueDate).getTime();
         comparison = dateA - dateB;
       }
+
       return sortDir === 'asc' ? comparison : -comparison;
     });
   }, [tasks, sortKey, sortDir]);
 
-  // 2. Feed Data to Virtualizer
   const { virtualItems, totalHeight, handleScroll } = useVirtualizer({
     itemCount: sortedTasks.length,
     itemHeight: ROW_HEIGHT,
@@ -73,14 +80,18 @@ export const ListView: React.FC<ListViewProps> = ({ tasks }) => {
   };
 
   if (sortedTasks.length === 0) {
-    return <div className="p-8 text-center text-gray-500">No tasks found.</div>;
+    return (
+      <div className="p-8 text-center text-gray-500">
+        No tasks found.
+      </div>
+    );
   }
 
   const gridTemplate = 'grid-cols-[2fr_1fr_1fr_1fr_1.5fr]';
 
   return (
     <div className="bg-white rounded-lg border shadow-sm flex flex-col h-full">
-      {/* Header Row */}
+      {/* Header */}
       <div
         className={`grid ${gridTemplate} gap-4 p-4 border-b bg-gray-50 font-semibold text-sm text-gray-700 select-none`}
       >
@@ -88,40 +99,49 @@ export const ListView: React.FC<ListViewProps> = ({ tasks }) => {
           className="cursor-pointer hover:text-black flex items-center"
           onClick={() => handleSort('title')}
         >
-          Task Title{' '}
+          Task Title
           <SortIndicator column="title" sortKey={sortKey} sortDir={sortDir} />
         </div>
+
         <div>Assignee</div>
+
         <div
           className="cursor-pointer hover:text-black flex items-center"
           onClick={() => handleSort('priority')}
         >
-          Priority{' '}
+          Priority
           <SortIndicator
             column="priority"
             sortKey={sortKey}
             sortDir={sortDir}
           />
         </div>
+
         <div
           className="cursor-pointer hover:text-black flex items-center"
           onClick={() => handleSort('dueDate')}
         >
-          Due Date{' '}
+          Due Date
           <SortIndicator column="dueDate" sortKey={sortKey} sortDir={sortDir} />
         </div>
+
         <div>Status (Inline Edit)</div>
       </div>
 
-      {/* Virtualized Container */}
       <div
         className="overflow-y-auto"
         style={{ height: `${CONTAINER_HEIGHT}px` }}
         onScroll={handleScroll}
       >
-        <div className="relative w-full" style={{ height: `${totalHeight}px` }}>
+        <div
+          className="relative w-full"
+          style={{ height: `${totalHeight}px` }}
+        >
           {virtualItems.map(({ index, offsetTop }) => {
             const task = sortedTasks[index];
+
+            const viewers = activeCollaborators[task.id] || [];
+
             return (
               <div
                 key={task.id}
@@ -134,15 +154,37 @@ export const ListView: React.FC<ListViewProps> = ({ tasks }) => {
                 <div className="font-medium text-sm truncate pr-4">
                   {task.title}
                 </div>
+
+                {viewers.length > 0 && (
+                  <div className="flex items-center ml-2 border-l pl-2 border-gray-200">
+                    <span className="text-[10px] text-gray-400 mr-1 uppercase tracking-wider">
+                      Viewing:
+                    </span>
+                    <div className="flex">
+                      {viewers.map((viewer, idx) => (
+                        <Avatar
+                          key={idx}
+                          initials={viewer}
+                          isStacked={idx > 0}
+                          bgColorClass="bg-purple-500"
+                        />
+                      ))}
+                    </div>
+                  </div>
+                )}
+
                 <div>
                   <Avatar initials={task.assignee} />
                 </div>
+
                 <div>
                   <Badge label={task.priority} />
                 </div>
+
                 <div>
                   <DueDateLabel dateString={task.dueDate} />
                 </div>
+
                 <div>
                   <Dropdown
                     value={task.status}

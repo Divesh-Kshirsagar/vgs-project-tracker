@@ -4,13 +4,18 @@ import { useTaskStore } from './store/taskStore';
 import { FilterBar } from './components/layout/FilterBar';
 import { ListView } from './features/list/ListView';
 import { KanbanBoard } from './features/kanban/KanbanBoard';
+import { TimelineView } from './features/timeline/TimelineView';
+import { useMockCollaboration } from './hooks/useMockCollabration';
 
 type ViewMode = 'kanban' | 'list' | 'timeline';
 
 function App() {
+  useMockCollaboration();
   const [view, setView] = useState<ViewMode>('list');
   const tasks = useTaskStore((state) => state.tasks);
   const { filters, updateFilters, clearFilters } = useUrlFilters();
+  const activeCollaborators = useTaskStore((state) => state.activeCollaborators);
+  const totalActive = Object.values(activeCollaborators).flat().length;
 
   const filteredTasks = useMemo(() => {
     return tasks.filter((task) => {
@@ -47,8 +52,12 @@ function App() {
     <div className="min-h-screen bg-gray-50 flex flex-col font-sans text-gray-900">
       <header className="bg-white border-b px-6 py-4 flex justify-between items-center shadow-sm">
         <h1 className="text-xl font-bold tracking-tight">Project Tracker</h1>
-        <div className="flex items-center gap-2 text-sm text-gray-500">
-          <span>0 people viewing this board</span>
+        <div className="flex items-center gap-2 text-sm text-gray-500 font-medium">
+          <span className="relative flex h-3 w-3 mr-1">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+            <span className="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
+          </span>
+          {totalActive} people viewing this board
         </div>
       </header>
 
@@ -59,11 +68,10 @@ function App() {
               <button
                 key={mode}
                 onClick={() => setView(mode)}
-                className={`px-4 py-1.5 rounded-md text-sm font-medium capitalize transition-colors ${
-                  view === mode
-                    ? 'bg-white shadow text-gray-900'
-                    : 'text-gray-500 hover:text-gray-900'
-                }`}
+                className={`px-4 py-1.5 rounded-md text-sm font-medium capitalize transition-colors ${view === mode
+                  ? 'bg-white shadow text-gray-900'
+                  : 'text-gray-500 hover:text-gray-900'
+                  }`}
               >
                 {mode}
               </button>
@@ -81,7 +89,7 @@ function App() {
       <main className="flex-1 overflow-hidden relative p-6">
         {view === 'list' && <ListView tasks={filteredTasks} />}
         {view === 'kanban' && <KanbanBoard tasks={filteredTasks} />}
-        {/* {view === 'timeline' && <TimelineView tasks={filteredTasks} />} */}
+        {view === 'timeline' && <TimelineView tasks={filteredTasks} />}
       </main>
     </div>
   );
