@@ -1,17 +1,21 @@
 import React from 'react';
-import { useUrlFilters } from '../../hooks/useUrlFilters';
 import { MultiSelect } from '../ui/MultiSelect';
 import { Button } from '../ui/Button';
 import type { TaskStatus, TaskPriority } from '../../types';
 import { STATUSES, PRIORITIES, ASSIGNEES } from '../../utils/seed';
+import type { FilterState } from '../../hooks/useUrlFilters';
 
 const STATUS_OPTIONS: TaskStatus[] = STATUSES;
 const PRIORITY_OPTIONS: TaskPriority[] = PRIORITIES;
 const ASSIGNEE_OPTIONS = ASSIGNEES;
 
-export const FilterBar: React.FC = () => {
-  const { filters, updateFilters, clearFilters } = useUrlFilters();
+type FilterBarProps = {
+  filters: FilterState;
+  updateFilters: (newFilters: Partial<FilterState>) => void;
+  clearFilters: () => void;
+};
 
+export const FilterBar: React.FC<FilterBarProps> = ({ filters, updateFilters, clearFilters }) => {
   const hasActiveFilters = 
     filters.status.length > 0 || 
     filters.priority.length > 0 || 

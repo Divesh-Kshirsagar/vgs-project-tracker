@@ -9,7 +9,7 @@ type ViewMode = 'kanban' | 'list' | 'timeline';
 function App() {
   const [view, setView] = useState<ViewMode>('list'); 
   const tasks = useTaskStore((state) => state.tasks);
-  const { filters } = useUrlFilters();
+  const { filters, updateFilters, clearFilters } = useUrlFilters();
 
   const filteredTasks = useMemo(() => {
     return tasks.filter((task) => {
@@ -62,7 +62,11 @@ function App() {
           </div>
         </div>
         
-        <FilterBar />
+        <FilterBar 
+          filters={filters} 
+          updateFilters={updateFilters} 
+          clearFilters={clearFilters} 
+        />
       </div>
 
       <main className="flex-1 overflow-hidden relative p-6">
