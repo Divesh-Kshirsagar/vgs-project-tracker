@@ -1,8 +1,8 @@
 import type { Task, TaskStatus, TaskPriority } from '../types/index';
 
-const STATUSES: TaskStatus[] = ['To Do', 'In Progress', 'In Review', 'Done'];
-const PRIORITIES: TaskPriority[] = ['Low', 'Medium', 'High', 'Critical'];
-const ASSIGNEES = ['JD', 'AS', 'MK', 'LR', 'BW', 'TC']; 
+export const STATUSES: TaskStatus[] = ['To Do', 'In Progress', 'In Review', 'Done'];
+export const PRIORITIES: TaskPriority[] = ['Low', 'Medium', 'High', 'Critical'];
+export const ASSIGNEES = ['JD', 'AS', 'MK', 'LR', 'BW', 'TC']; 
 const TITLES = [
   'Design homepage',
   'Implement authentication',
