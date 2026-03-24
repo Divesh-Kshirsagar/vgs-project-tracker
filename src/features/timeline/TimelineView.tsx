@@ -59,8 +59,8 @@ export const TimelineView: React.FC<TimelineViewProps> = ({ tasks }) => {
           <div 
             className="bg-red-500 w-0.5 absolute top-0 bottom-0 z-10 pointer-events-none"
             style={{ 
-              gridColumn: currentDay + 1, 
-              justifySelf: 'center' 
+              gridColumn: `2 / span ${daysInMonth}`,
+              marginLeft: `${((currentDay - 0.5) / daysInMonth) * 100}%`
             }}
           />
 
