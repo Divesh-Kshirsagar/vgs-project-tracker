@@ -3,9 +3,8 @@ import { persist } from 'zustand/middleware';
 import type { Task, TaskStatus } from '../types';
 import { generateTasks } from '../utils/seed';
 
-
 export interface CollaboratorState {
-  [taskId: string]: string[]; 
+  [taskId: string]: string[];
 }
 
 interface TaskState {
@@ -55,4 +54,3 @@ export const useTaskStore = create<TaskState>()(
     },
   ),
 );
-

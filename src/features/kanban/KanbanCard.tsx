@@ -26,20 +26,16 @@ export const KanbanCard: React.FC<KanbanCardProps> = ({
   isSnappingBack,
 }) => {
   const activeCollaborators = useTaskStore(
-    (state) => state.activeCollaborators
+    (state) => state.activeCollaborators,
   );
 
   const viewers = activeCollaborators[task.id] || [];
 
   const deltaX =
-    isFloatingClone && currentPos && startPos
-      ? currentPos.x - startPos.x
-      : 0;
+    isFloatingClone && currentPos && startPos ? currentPos.x - startPos.x : 0;
 
   const deltaY =
-    isFloatingClone && currentPos && startPos
-      ? currentPos.y - startPos.y
-      : 0;
+    isFloatingClone && currentPos && startPos ? currentPos.y - startPos.y : 0;
 
   if (isDragging && !isFloatingClone) {
     return (
@@ -73,7 +69,10 @@ export const KanbanCard: React.FC<KanbanCardProps> = ({
     >
       <div className="flex justify-between items-start mb-2">
         <Badge label={task.priority} />
-        <Avatar initials={task.assignee} bgColorClass={ASSIGNEE_COLORS[task.assignee]} />
+        <Avatar
+          initials={task.assignee}
+          bgColorClass={ASSIGNEE_COLORS[task.assignee]}
+        />
       </div>
 
       {viewers.length > 0 && (

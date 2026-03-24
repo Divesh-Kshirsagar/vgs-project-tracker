@@ -14,7 +14,9 @@ function App() {
   const [view, setView] = useState<ViewMode>('list');
   const tasks = useTaskStore((state) => state.tasks);
   const { filters, updateFilters, clearFilters } = useUrlFilters();
-  const activeCollaborators = useTaskStore((state) => state.activeCollaborators);
+  const activeCollaborators = useTaskStore(
+    (state) => state.activeCollaborators,
+  );
   const totalActive = Object.values(activeCollaborators).flat().length;
 
   const filteredTasks = useMemo(() => {
@@ -68,10 +70,11 @@ function App() {
               <button
                 key={mode}
                 onClick={() => setView(mode)}
-                className={`px-4 py-1.5 rounded-md text-sm font-medium capitalize transition-colors ${view === mode
-                  ? 'bg-white shadow text-gray-900'
-                  : 'text-gray-500 hover:text-gray-900'
-                  }`}
+                className={`px-4 py-1.5 rounded-md text-sm font-medium capitalize transition-colors ${
+                  view === mode
+                    ? 'bg-white shadow text-gray-900'
+                    : 'text-gray-500 hover:text-gray-900'
+                }`}
               >
                 {mode}
               </button>

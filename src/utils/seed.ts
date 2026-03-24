@@ -22,12 +22,12 @@ const TITLES = [
 ];
 
 export const ASSIGNEE_COLORS: Record<string, string> = {
-  'JD': 'bg-blue-600',
-  'AS': 'bg-red-600',
-  'MK': 'bg-green-600',
-  'LR': 'bg-purple-600',
-  'BW': 'bg-orange-600',
-  'TC': 'bg-pink-600',
+  JD: 'bg-blue-600',
+  AS: 'bg-red-600',
+  MK: 'bg-green-600',
+  LR: 'bg-purple-600',
+  BW: 'bg-orange-600',
+  TC: 'bg-pink-600',
 };
 
 export const generateTasks = (): Task[] => {

@@ -26,9 +26,7 @@ const SortIndicator: React.FC<SortIndicatorProps> = ({
 }) => {
   if (sortKey !== column) return null;
   return (
-    <span className="ml-1 text-blue-600">
-      {sortDir === 'asc' ? '↑' : '↓'}
-    </span>
+    <span className="ml-1 text-blue-600">{sortDir === 'asc' ? '↑' : '↓'}</span>
   );
 };
 
@@ -39,7 +37,7 @@ type ListViewProps = {
 export const ListView: React.FC<ListViewProps> = ({ tasks }) => {
   const updateTaskStatus = useTaskStore((s) => s.updateTaskStatus);
   const activeCollaborators = useTaskStore(
-    (state) => state.activeCollaborators
+    (state) => state.activeCollaborators,
   );
 
   const [sortKey, setSortKey] = useState<SortKey>('dueDate');
@@ -52,8 +50,7 @@ export const ListView: React.FC<ListViewProps> = ({ tasks }) => {
       if (sortKey === 'title') {
         comparison = a.title.localeCompare(b.title);
       } else if (sortKey === 'priority') {
-        comparison =
-          PRIORITY_WEIGHT[b.priority] - PRIORITY_WEIGHT[a.priority];
+        comparison = PRIORITY_WEIGHT[b.priority] - PRIORITY_WEIGHT[a.priority];
       } else if (sortKey === 'dueDate') {
         const dateA = new Date(a.dueDate).getTime();
         const dateB = new Date(b.dueDate).getTime();
@@ -81,11 +78,7 @@ export const ListView: React.FC<ListViewProps> = ({ tasks }) => {
   };
 
   if (sortedTasks.length === 0) {
-    return (
-      <div className="p-8 text-center text-gray-500">
-        No tasks found.
-      </div>
-    );
+    return <div className="p-8 text-center text-gray-500">No tasks found.</div>;
   }
 
   const gridTemplate = 'grid-cols-[2fr_1fr_1fr_1fr_1.5fr]';
@@ -134,10 +127,7 @@ export const ListView: React.FC<ListViewProps> = ({ tasks }) => {
         style={{ height: `${CONTAINER_HEIGHT}px` }}
         onScroll={handleScroll}
       >
-        <div
-          className="relative w-full"
-          style={{ height: `${totalHeight}px` }}
-        >
+        <div className="relative w-full" style={{ height: `${totalHeight}px` }}>
           {virtualItems.map(({ index, offsetTop }) => {
             const task = sortedTasks[index];
 
@@ -175,7 +165,10 @@ export const ListView: React.FC<ListViewProps> = ({ tasks }) => {
                 )}
 
                 <div>
-                  <Avatar initials={task.assignee} bgColorClass={ASSIGNEE_COLORS[task.assignee]} />
+                  <Avatar
+                    initials={task.assignee}
+                    bgColorClass={ASSIGNEE_COLORS[task.assignee]}
+                  />
                 </div>
 
                 <div>
