@@ -21,7 +21,7 @@ export const KanbanBoard: React.FC<{ tasks: Task[] }> = ({ tasks }) => {
   const draggedTask = tasks.find((t) => t.id === draggedId);
 
   return (
-    <div className="flex h-full gap-6 overflow-x-auto pb-4">
+    <div className="flex h-full w-full gap-6 overflow-x-auto pb-4">
       {COLUMNS.map((status) => {
         const columnTasks = tasks.filter((t) => t.status === status);
         const isHovered = hoveredColumn === status;
@@ -31,7 +31,7 @@ export const KanbanBoard: React.FC<{ tasks: Task[] }> = ({ tasks }) => {
             key={status}
             data-status={status}
             className={`
-              flex flex-col min-w-[320px] max-w-[320px] bg-gray-100/50 rounded-xl p-4 border transition-colors
+              flex flex-col flex-1 basis-0 min-w-[280px] bg-gray-100/50 rounded-xl p-4 border transition-colors
               ${isHovered ? 'bg-blue-50 border-blue-200' : 'border-transparent'}
             `}
           >
