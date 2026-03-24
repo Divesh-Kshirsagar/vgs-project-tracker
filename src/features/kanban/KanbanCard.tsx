@@ -4,6 +4,7 @@ import { Badge } from '../../components/ui/Badge';
 import { Avatar } from '../../components/ui/Avatar';
 import { DueDateLabel } from '../../components/ui/DueDateLabel';
 import { useTaskStore } from '../../store/taskStore';
+import { ASSIGNEE_COLORS } from '../../utils/seed';
 
 interface KanbanCardProps {
   task: Task;
@@ -72,7 +73,7 @@ export const KanbanCard: React.FC<KanbanCardProps> = ({
     >
       <div className="flex justify-between items-start mb-2">
         <Badge label={task.priority} />
-        <Avatar initials={task.assignee} />
+        <Avatar initials={task.assignee} bgColorClass={ASSIGNEE_COLORS[task.assignee]} />
       </div>
 
       {viewers.length > 0 && (
@@ -86,7 +87,7 @@ export const KanbanCard: React.FC<KanbanCardProps> = ({
                 key={idx}
                 initials={viewer}
                 isStacked={idx > 0}
-                bgColorClass="bg-purple-500"
+                bgColorClass={ASSIGNEE_COLORS[viewer]}
               />
             ))}
           </div>

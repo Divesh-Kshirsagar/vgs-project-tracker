@@ -2,6 +2,7 @@ import React, { useMemo } from 'react';
 import type { Task } from '../../types';
 import { getCurrentMonthData } from '../../utils/date';
 import { Avatar } from '../../components/ui/Avatar';
+import { ASSIGNEE_COLORS } from '../../utils/seed';
 
 const PRIORITY_COLORS: Record<string, string> = {
   Critical: 'bg-red-500',
@@ -90,7 +91,7 @@ export const TimelineView: React.FC<TimelineViewProps> = ({ tasks }) => {
               <React.Fragment key={task.id}>
                 {/* Task Title (Sticky Left) */}
                 <div className="sticky left-0 bg-white z-10 border-b border-r p-3 flex items-center gap-3">
-                  <Avatar initials={task.assignee} />
+                  <Avatar initials={task.assignee} bgColorClass={ASSIGNEE_COLORS[task.assignee]} />
                   <span className="text-sm font-medium text-gray-800 truncate w-40" title={task.title}>
                     {task.title}
                   </span>

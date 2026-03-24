@@ -8,6 +8,7 @@ import { Badge } from '../../components/ui/Badge';
 import { Avatar } from '../../components/ui/Avatar';
 import { DueDateLabel } from '../../components/ui/DueDateLabel';
 import { Dropdown } from '../../components/ui/Dropdown';
+import { ASSIGNEE_COLORS } from '../../utils/seed';
 
 const ROW_HEIGHT = 64;
 const CONTAINER_HEIGHT = 600;
@@ -166,7 +167,7 @@ export const ListView: React.FC<ListViewProps> = ({ tasks }) => {
                           key={idx}
                           initials={viewer}
                           isStacked={idx > 0}
-                          bgColorClass="bg-purple-500"
+                          bgColorClass={ASSIGNEE_COLORS[viewer]}
                         />
                       ))}
                     </div>
@@ -174,7 +175,7 @@ export const ListView: React.FC<ListViewProps> = ({ tasks }) => {
                 )}
 
                 <div>
-                  <Avatar initials={task.assignee} />
+                  <Avatar initials={task.assignee} bgColorClass={ASSIGNEE_COLORS[task.assignee]} />
                 </div>
 
                 <div>
