@@ -22,7 +22,7 @@ export const MultiSelect: React.FC<MultiSelectProps> = ({
 
   return (
     <details className="relative group">
-      <summary className="list-none cursor-pointer bg-white border border-gray-300 rounded-md px-3 py-1.5 text-sm font-medium text-gray-700 hover:bg-gray-50 flex items-center justify-between min-w-[140px]">
+      <summary className="list-none cursor-pointer bg-white border border-gray-300 rounded-md px-3 py-1.5 text-sm font-medium text-gray-700 hover:bg-gray-50 flex items-center justify-between min-w-35">
         {label} {selectedValues.length > 0 && `(${selectedValues.length})`}
         <span className="ml-2 text-gray-400 group-open:rotate-180 transition-transform">
           ▼

@@ -21,7 +21,6 @@ function App() {
 
   const filteredTasks = useMemo(() => {
     return tasks.filter((task) => {
-      // 1. Array Filters (If array is empty, it means "show all")
       const matchStatus =
         filters.status.length === 0 || filters.status.includes(task.status);
       const matchPriority =
@@ -31,7 +30,6 @@ function App() {
         filters.assignee.length === 0 ||
         filters.assignee.includes(task.assignee);
 
-      // 2. Date Range Filters
       let matchDate = true;
       const taskDate = new Date(task.dueDate).getTime();
 
@@ -40,7 +38,6 @@ function App() {
           matchDate && taskDate >= new Date(filters.dateFrom).getTime();
       }
       if (filters.dateTo) {
-        // Add 24 hours to dateTo so the whole day is inclusive
         const toDate = new Date(filters.dateTo);
         toDate.setHours(23, 59, 59, 999);
         matchDate = matchDate && taskDate <= toDate.getTime();

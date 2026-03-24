@@ -33,7 +33,7 @@ export const ASSIGNEE_COLORS: Record<string, string> = {
 export const generateTasks = (): Task[] => {
   const tasks: Task[] = [];
 
-  for (let i = 0; i < 600; i++) {
+  for (let i = 0; i < 500; i++) {
     const id = crypto.randomUUID() as string;
     const title = TITLES[Math.floor(Math.random() * TITLES.length)];
     const status = STATUSES[Math.floor(Math.random() * STATUSES.length)];

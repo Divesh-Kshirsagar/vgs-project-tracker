@@ -11,7 +11,6 @@ interface TaskState {
   tasks: Task[];
   activeCollaborators: CollaboratorState;
   updateCollaborators: (collabs: CollaboratorState) => void;
-  // Actions
   updateTaskStatus: (taskId: string, newStatus: TaskStatus) => void;
   setTasks: (tasks: Task[]) => void;
 }

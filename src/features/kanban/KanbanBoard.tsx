@@ -42,7 +42,7 @@ export const KanbanBoard: React.FC<{ tasks: Task[] }> = ({ tasks }) => {
               </span>
             </div>
 
-            <div className="flex-1 overflow-y-auto min-h-[150px]">
+            <div className="flex-1 overflow-y-auto min-h-37">
               {columnTasks.length === 0 && (
                 <div className="h-24 border-2 border-dashed border-gray-300 rounded-lg flex items-center justify-center text-sm text-gray-400">
                   Drop tasks here

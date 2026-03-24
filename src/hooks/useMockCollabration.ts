@@ -38,7 +38,7 @@ export const useMockCollaboration = () => {
       });
 
       updateCollaborators(newCollaborators);
-    }, 3000); 
+    }, 3000);
 
     return () => clearInterval(interval);
   }, [tasks, updateCollaborators]);

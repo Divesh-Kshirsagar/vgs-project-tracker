@@ -87,10 +87,10 @@ export const ListView: React.FC<ListViewProps> = ({ tasks }) => {
     <div className="bg-white rounded-lg border shadow-sm flex flex-col h-full">
       {/* Header */}
       <div
-        className={`grid ${gridTemplate} gap-4 p-4 border-b bg-gray-50 font-semibold text-sm text-gray-700 select-none`}
+        className={`grid ${gridTemplate} gap-4 p-4 border-b bg-gray-50 font-semibold text-sm text-gray-700 select-none rounded-t-lg`}
       >
         <div
-          className="cursor-pointer hover:text-black flex items-center"
+          className="cursor-pointer hover:text-black flex items-center text-nowrap"
           onClick={() => handleSort('title')}
         >
           Task Title
@@ -112,14 +112,14 @@ export const ListView: React.FC<ListViewProps> = ({ tasks }) => {
         </div>
 
         <div
-          className="cursor-pointer hover:text-black flex items-center"
+          className="cursor-pointer hover:text-black flex items-center text-nowrap"
           onClick={() => handleSort('dueDate')}
         >
           Due Date
           <SortIndicator column="dueDate" sortKey={sortKey} sortDir={sortDir} />
         </div>
 
-        <div>Status (Inline Edit)</div>
+        <div>Status </div>
       </div>
 
       <div
@@ -142,35 +142,30 @@ export const ListView: React.FC<ListViewProps> = ({ tasks }) => {
                   top: `${offsetTop}px`,
                 }}
               >
-                <div className="font-medium text-sm truncate pr-4">
-                  {task.title}
-                </div>
+                <div className="flex items-center gap-2 min-w-0 pr-4">
+                  <span className="font-medium text-sm truncate">
+                    {task.title}
+                  </span>
 
-{viewers.length > 0 && (
-  <div className="absolute flex items-center ml-2 border-l pl-2 border-gray-200 min-h-[32px] max-h-[32px] overflow-hidden flex-nowrap"
-    style={{
-      left: '250px',
-      width: '100px',
-      zIndex: 10
-    }}>
-    <div className="flex items-center gap-0 flex-shrink-0">
-      {viewers.slice(0, 2).map((viewer, idx) => (
-        <Avatar
-          key={idx}
-          initials={viewer}
-          isStacked={idx > 0}
-          bgColorClass={ASSIGNEE_COLORS[viewer]}
-          className="transition-all opacity-100 translate-x-0"
-        />
-      ))}
-      {viewers.length > 2 && (
-        <div className="transition-all opacity-100 translate-x-0 flex items-center justify-center w-8 h-8 rounded-full text-white text-xs font-bold border-2 border-white bg-gray-500 -ml-2 flex-shrink-0">
-          +{viewers.length - 2}
-        </div>
-      )}
-    </div>
-  </div>
-)}
+                  {viewers.length > 0 && (
+                    <div className="flex items-center gap-0 shrink-0 border-l border-gray-200 pl-2">
+                      {viewers.slice(0, 2).map((viewer, idx) => (
+                        <Avatar
+                          key={idx}
+                          initials={viewer}
+                          isStacked={idx > 0}
+                          bgColorClass={ASSIGNEE_COLORS[viewer]}
+                          className="transition-all opacity-100 translate-x-0"
+                        />
+                      ))}
+                      {viewers.length > 2 && (
+                        <div className="flex items-center justify-center w-8 h-8 rounded-full text-white text-xs font-bold border-2 border-white bg-gray-500 -ml-2 shrink-0">
+                          +{viewers.length - 2}
+                        </div>
+                      )}
+                    </div>
+                  )}
+                </div>
 
                 <div>
                   <Avatar

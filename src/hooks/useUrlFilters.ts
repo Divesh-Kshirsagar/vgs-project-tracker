@@ -35,7 +35,6 @@ export const useUrlFilters = () => {
       const updated = { ...prev, ...newFilters };
       const searchParams = new URLSearchParams();
 
-      // Append arrays properly
       Object.entries(updated).forEach(([key, value]) => {
         if (Array.isArray(value)) {
           value.forEach((v) => searchParams.append(key, v));

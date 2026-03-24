@@ -19,7 +19,6 @@ export const usePointerDnD = (
     if (e.button !== 0 && e.pointerType === 'mouse') return;
 
     e.preventDefault();
-    // e.target.setPointerCapture(e.pointerId);
 
     setDraggedId(taskId);
     setStartPos({ x: e.clientX, y: e.clientY });
