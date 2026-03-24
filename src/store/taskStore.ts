@@ -13,7 +13,7 @@ interface TaskState {
   activeCollaborators: CollaboratorState;
   updateCollaborators: (collabs: CollaboratorState) => void;
   // Actions
-  updateTaskStatus: (id: string, newStatus: TaskStatus) => void;
+  updateTaskStatus: (taskId: string, newStatus: TaskStatus) => void;
   setTasks: (tasks: Task[]) => void;
 }
 
@@ -24,12 +24,20 @@ export const useTaskStore = create<TaskState>()(
       activeCollaborators: {},
       updateCollaborators: (collabs) => set({ activeCollaborators: collabs }),
       setTasks: (tasks) => set({ tasks }),
-      updateTaskStatus: (id, newStatus) =>
-        set((state) => ({
-          tasks: state.tasks.map((task) =>
-            task.id === id ? { ...task, status: newStatus } : task,
-          ),
-        })),
+      updateTaskStatus: (taskId, newStatus) =>
+        set((state) => {
+          const taskIndex = state.tasks.findIndex((t) => t.id === taskId);
+          if (taskIndex === -1) return state;
+
+          const updatedTask = { ...state.tasks[taskIndex], status: newStatus };
+
+          const newTasks = [...state.tasks];
+          newTasks.splice(taskIndex, 1);
+
+          newTasks.push(updatedTask);
+
+          return { tasks: newTasks };
+        }),
     }),
     {
       name: 'vgs-project-tracker',
