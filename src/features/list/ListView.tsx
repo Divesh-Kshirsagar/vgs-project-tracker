@@ -186,6 +186,7 @@ export const ListView: React.FC<ListViewProps> = ({ tasks }) => {
                   <Dropdown
                     value={task.status}
                     options={['To Do', 'In Progress', 'In Review', 'Done']}
+                    aria-label={`Status for ${task.title}`}
                     onChange={(e) =>
                       updateTaskStatus(task.id, e.target.value as TaskStatus)
                     }

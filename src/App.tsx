@@ -62,7 +62,7 @@ function App() {
 
       <div className="px-6 py-4 border-b bg-white flex flex-col gap-4">
         <div className="flex justify-between items-center">
-          <div className="flex bg-gray-100 p-1 rounded-lg">
+          <div className="flex bg-gray-200 p-1 rounded-lg">
             {(['kanban', 'list', 'timeline'] as ViewMode[]).map((mode) => (
               <button
                 key={mode}
@@ -70,7 +70,7 @@ function App() {
                 className={`px-4 py-1.5 rounded-md text-sm font-medium capitalize transition-colors ${
                   view === mode
                     ? 'bg-white shadow text-gray-900'
-                    : 'text-gray-500 hover:text-gray-900'
+                    : 'text-gray-700 hover:text-gray-900'
                 }`}
               >
                 {mode}

@@ -58,6 +58,7 @@ export const FilterBar: React.FC<FilterBarProps> = ({
       <div className="flex items-center gap-2 bg-white border border-gray-300 rounded-md px-2 py-1 focus-within:ring-2 focus-within:ring-blue-500">
         <input
           type="date"
+          aria-label="Filter from date"
           value={filters.dateFrom}
           onChange={(e) => updateFilters({ dateFrom: e.target.value })}
           className="text-sm border-none focus:ring-0 text-gray-600 bg-transparent p-0"
@@ -65,6 +66,7 @@ export const FilterBar: React.FC<FilterBarProps> = ({
         <span className="text-gray-400 text-sm">→</span>
         <input
           type="date"
+          aria-label="Filter to date"
           value={filters.dateTo}
           onChange={(e) => updateFilters({ dateTo: e.target.value })}
           className="text-sm border-none focus:ring-0 text-gray-600 bg-transparent p-0"
