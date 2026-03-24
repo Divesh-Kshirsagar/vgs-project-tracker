@@ -76,10 +76,7 @@ export const KanbanCard: React.FC<KanbanCardProps> = ({
       </div>
 
       {viewers.length > 0 && (
-        <div className="flex items-center ml-2 border-l pl-2 border-gray-200">
-          <span className="text-[10px] text-gray-400 mr-1 uppercase tracking-wider">
-            Viewing:
-          </span>
+        <div className="flex items-center ml-2 border-l mb-4 pl-2 border-gray-200">
           <div className="flex">
             {viewers.map((viewer, idx) => (
               <Avatar

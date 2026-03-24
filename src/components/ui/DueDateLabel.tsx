@@ -19,11 +19,17 @@ export const DueDateLabel: React.FC<DueDateLabelProps> = ({ dateString }) => {
   }
 
   if (diffDays < 0) {
-    return (
-      <span className="text-sm font-semibold text-red-600">
-        Overdue by {Math.abs(diffDays)} day{Math.abs(diffDays) !== 1 ? 's' : ''}
-      </span>
-    );
+    const overdueDays = Math.abs(diffDays);
+
+    if (overdueDays > 7) {
+      return (
+        <span className="text-sm font-semibold text-red-600">
+          Overdue by {overdueDays} day{overdueDays !== 1 ? 's' : ''}
+        </span>
+      );
+    }
+
+    return <span className="text-sm font-semibold text-red-600">Overdue</span>;
   }
 
   return (

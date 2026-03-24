@@ -5,6 +5,7 @@ interface AvatarProps {
   isStacked?: boolean;
   isOverflow?: boolean;
   bgColorClass?: string;
+  className?: string;
 }
 
 export const Avatar: React.FC<AvatarProps> = ({
@@ -12,6 +13,7 @@ export const Avatar: React.FC<AvatarProps> = ({
   isStacked = false,
   isOverflow = false,
   bgColorClass = 'bg-blue-600',
+  className = '',
 }) => {
   return (
     <div
@@ -19,6 +21,7 @@ export const Avatar: React.FC<AvatarProps> = ({
         flex items-center justify-center w-8 h-8 rounded-full text-white text-xs font-bold border-2 border-white
         ${isStacked ? '-ml-2' : ''} 
         ${isOverflow ? 'bg-gray-500 text-gray-100' : bgColorClass}
+        ${className}
       `}
       title={isOverflow ? `+${initials} more` : initials}
     >

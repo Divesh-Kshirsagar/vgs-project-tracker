@@ -146,23 +146,31 @@ export const ListView: React.FC<ListViewProps> = ({ tasks }) => {
                   {task.title}
                 </div>
 
-                {viewers.length > 0 && (
-                  <div className="flex items-center ml-2 border-l pl-2 border-gray-200">
-                    <span className="text-[10px] text-gray-400 mr-1 uppercase tracking-wider">
-                      Viewing:
-                    </span>
-                    <div className="flex">
-                      {viewers.map((viewer, idx) => (
-                        <Avatar
-                          key={idx}
-                          initials={viewer}
-                          isStacked={idx > 0}
-                          bgColorClass={ASSIGNEE_COLORS[viewer]}
-                        />
-                      ))}
-                    </div>
-                  </div>
-                )}
+{viewers.length > 0 && (
+  <div className="absolute flex items-center ml-2 border-l pl-2 border-gray-200 min-h-[32px] max-h-[32px] overflow-hidden flex-nowrap"
+    style={{
+      left: '250px',
+      width: '100px',
+      zIndex: 10
+    }}>
+    <div className="flex items-center gap-0 flex-shrink-0">
+      {viewers.slice(0, 2).map((viewer, idx) => (
+        <Avatar
+          key={idx}
+          initials={viewer}
+          isStacked={idx > 0}
+          bgColorClass={ASSIGNEE_COLORS[viewer]}
+          className="transition-all opacity-100 translate-x-0"
+        />
+      ))}
+      {viewers.length > 2 && (
+        <div className="transition-all opacity-100 translate-x-0 flex items-center justify-center w-8 h-8 rounded-full text-white text-xs font-bold border-2 border-white bg-gray-500 -ml-2 flex-shrink-0">
+          +{viewers.length - 2}
+        </div>
+      )}
+    </div>
+  </div>
+)}
 
                 <div>
                   <Avatar
